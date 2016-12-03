@@ -1,3 +1,4 @@
+Original README from Raffael 'Raffi' Himmelreich:
 To install run the following commands:
 make
 su -c "make install"
