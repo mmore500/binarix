@@ -213,6 +213,7 @@ void comparepasswords(char ch)
 
 	nodelay(stdscr, 1);
 	
+  	if (ch != '\n') pass[count++] = ch;
   	if (ch==127 || ch ==8) count--;
 	
 	pass[count] = '\0';
