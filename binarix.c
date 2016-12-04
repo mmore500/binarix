@@ -55,7 +55,7 @@ void fillfield();
 void changefield();
 void printhelp(int);
 void getpassword();
-void comparepasswords();
+void comparepasswords(char);
 void push_snake(int, int);
 char *crypt();
 WINDOW *win;
@@ -134,7 +134,7 @@ void printfield()
 		win = dialog(DIALOG_PASS_HEIGHT, DIALOG_PASS_WIDTH,\
 			    (y-DIALOG_PASS_HEIGHT)/2, (x-DIALOG_PASS_WIDTH)/2,\
 			    DIALOG_PASS_TEXT);
-		comparepasswords();
+		comparepasswords(ch);
 	} else {
 		refresh();
 	}
@@ -196,9 +196,8 @@ void getpassword()
 	strcpy(userpass, pw->sp_pwdp);
 }
 
-void comparepasswords()
+void comparepasswords(char ch)
 {
-	char ch;
 	char pass[127];
 	int count;
 
@@ -206,10 +205,16 @@ void comparepasswords()
 	nodelay(stdscr, 0);
 
 	while((ch = getch()) != '\n')
-		pass[count++] = ch;
+	{
+		if (count<0) count=0;
+		if (ch==127 || ch ==8) count--;
+	  	else pass[count++] = ch;
+	}
 
 	nodelay(stdscr, 1);
-
+	
+  	if (ch==127 || ch ==8) count--;
+	
 	pass[count] = '\0';
 
 	if (strcmp(crypt(pass, userpass), userpass) == 0)
