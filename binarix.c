@@ -276,8 +276,10 @@ void push_snake(int element, int col)
 {
 	int i;
 
-	for(i=y; i > 1; i--)
+	for(i=y; i > 1; i--) {
 		field[col][i-1] = field[col][i-2];
+		if (field[col][i-1] != 2) field[col][i-1] = getChar();
+	}
 
 	field[col][0] = element;
 }
