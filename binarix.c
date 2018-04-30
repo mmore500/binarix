@@ -41,7 +41,7 @@
                          "  to unlock the console!\n"          \
                          "\n"                                  \
                          "  Proceed with any key."
-
+#define WHICH_WIDTH_MAX 10
 
 int  x, y;
 int  bbox;
@@ -49,6 +49,12 @@ int  **field;
 int  vt;
 char ch;
 char userpass[127];
+int WHICH_WIDTH = 7;
+int which = 2;
+int which2 = 1;
+int offset = 235235;
+int offset2 = 8930502;
+int holiday = 13241;
 
 void printfield();
 void fillfield();
@@ -62,6 +68,12 @@ WINDOW *win;
 
 WINDOW *dialog(int height, int width, int starty, int startx, char *text);
 extern int setsecurity(void);
+
+char getChar() {
+    int x = rand() % 80 + 33;
+    return x;
+}
+
 
 
 int main()
@@ -124,7 +136,7 @@ void printfield()
 			if(field[tmp][i] == 2)
 				printw(" ");
 			else
-				printw("%d", field[tmp][i]);
+				printw("%c", field[tmp][i]);
 		}
 	}
 
@@ -139,8 +151,24 @@ void printfield()
 		refresh();
 	}
 
+	
+	if (rand()%40 == 1) {
+		which = rand() % WHICH_WIDTH;
+		offset = rand();
+	}
+	if (rand()%40 == 1) {
+		which2 = rand() % WHICH_WIDTH;
+		offset2 = rand();
+	}
+	if (rand()%40 == 1) {
+		holiday=rand();
+	}
+	if (rand()%30 == 1) {
+		WHICH_WIDTH=rand()%WHICH_WIDTH_MAX+1;
+	}
 	usleep(100000);
 	changefield();
+
 }
 
 void changefield()
@@ -152,11 +180,11 @@ void changefield()
 			if(rand()%25 < 20)
 				continue;
 
-			if(rand()%40 < 10)
+			if(rand()%45 < 10 || (holiday % 7 != 0 && (((i+offset)%x)*WHICH_WIDTH) / x != which && (((i+offset2)%x)*WHICH_WIDTH) / x != which2))
 			{
 				push_snake(2, i);
 			} else {
-				push_snake(rand()%2, i);
+				push_snake(getChar(), i);
 			}
         }
 	
