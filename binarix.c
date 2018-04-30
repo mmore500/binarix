@@ -166,6 +166,18 @@ void printfield()
 	if (rand()%30 == 1) {
 		WHICH_WIDTH=rand()%WHICH_WIDTH_MAX+1;
 	}
+	if (rand()%2) {
+		offset += 1;
+	}
+	else {
+		offset -= 1;
+	}
+	if (rand()%2) {
+		offset2 += 1;
+	}
+	else {
+		offset2 -= 1;
+	}
 	usleep(100000);
 	changefield();
 
